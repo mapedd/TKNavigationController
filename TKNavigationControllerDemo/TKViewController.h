@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TKViewController : UIViewController
+@interface TKViewController : UITableViewController
 
 @end

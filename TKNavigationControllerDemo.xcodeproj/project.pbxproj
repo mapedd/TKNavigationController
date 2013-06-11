@@ -17,8 +17,9 @@
 		04CFFDDB17672A2100B8AD6A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04CFFDDA17672A2100B8AD6A /* Default@2x.png */; };
 		04CFFDDD17672A2100B8AD6A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04CFFDDC17672A2100B8AD6A /* Default-568h@2x.png */; };
 		04CFFDE017672A2100B8AD6A /* TKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CFFDDF17672A2100B8AD6A /* TKViewController.m */; };
-		04CFFDE317672A2100B8AD6A /* TKViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04CFFDE117672A2100B8AD6A /* TKViewController_iPhone.xib */; };
-		04CFFDE617672A2100B8AD6A /* TKViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04CFFDE417672A2100B8AD6A /* TKViewController_iPad.xib */; };
+		04CFFDF117672B8600B8AD6A /* UIView+TKGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CFFDF017672B8600B8AD6A /* UIView+TKGeometry.m */; };
+		04CFFE04176763DB00B8AD6A /* TKNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CFFE01176763DB00B8AD6A /* TKNavigationController.m */; };
+		04CFFE05176763DB00B8AD6A /* TKViewController.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 04CFFE03176763DB00B8AD6A /* TKViewController.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,8 +38,11 @@
 		04CFFDDC17672A2100B8AD6A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		04CFFDDE17672A2100B8AD6A /* TKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKViewController.h; sourceTree = "<group>"; };
 		04CFFDDF17672A2100B8AD6A /* TKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKViewController.m; sourceTree = "<group>"; };
-		04CFFDE217672A2100B8AD6A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TKViewController_iPhone.xib; sourceTree = "<group>"; };
-		04CFFDE517672A2100B8AD6A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TKViewController_iPad.xib; sourceTree = "<group>"; };
+		04CFFDEF17672B8600B8AD6A /* UIView+TKGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TKGeometry.h"; sourceTree = "<group>"; };
+		04CFFDF017672B8600B8AD6A /* UIView+TKGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TKGeometry.m"; sourceTree = "<group>"; };
+		04CFFE01176763DB00B8AD6A /* TKNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKNavigationController.m; sourceTree = SOURCE_ROOT; };
+		04CFFE02176763DB00B8AD6A /* TKNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKNavigationController.h; sourceTree = SOURCE_ROOT; };
+		04CFFE03176763DB00B8AD6A /* TKViewController.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TKViewController.podspec; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,12 +89,15 @@
 		04CFFDCC17672A2100B8AD6A /* TKNavigationControllerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				04CFFE03176763DB00B8AD6A /* TKViewController.podspec */,
 				04CFFDD517672A2100B8AD6A /* TKAppDelegate.h */,
 				04CFFDD617672A2100B8AD6A /* TKAppDelegate.m */,
 				04CFFDDE17672A2100B8AD6A /* TKViewController.h */,
 				04CFFDDF17672A2100B8AD6A /* TKViewController.m */,
-				04CFFDE117672A2100B8AD6A /* TKViewController_iPhone.xib */,
-				04CFFDE417672A2100B8AD6A /* TKViewController_iPad.xib */,
+				04CFFE01176763DB00B8AD6A /* TKNavigationController.m */,
+				04CFFE02176763DB00B8AD6A /* TKNavigationController.h */,
+				04CFFDEF17672B8600B8AD6A /* UIView+TKGeometry.h */,
+				04CFFDF017672B8600B8AD6A /* UIView+TKGeometry.m */,
 				04CFFDCD17672A2100B8AD6A /* Supporting Files */,
 			);
 			path = TKNavigationControllerDemo;
@@ -166,8 +173,7 @@
 				04CFFDD917672A2100B8AD6A /* Default.png in Resources */,
 				04CFFDDB17672A2100B8AD6A /* Default@2x.png in Resources */,
 				04CFFDDD17672A2100B8AD6A /* Default-568h@2x.png in Resources */,
-				04CFFDE317672A2100B8AD6A /* TKViewController_iPhone.xib in Resources */,
-				04CFFDE617672A2100B8AD6A /* TKViewController_iPad.xib in Resources */,
+				04CFFE05176763DB00B8AD6A /* TKViewController.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +187,8 @@
 				04CFFDD317672A2100B8AD6A /* main.m in Sources */,
 				04CFFDD717672A2100B8AD6A /* TKAppDelegate.m in Sources */,
 				04CFFDE017672A2100B8AD6A /* TKViewController.m in Sources */,
+				04CFFDF117672B8600B8AD6A /* UIView+TKGeometry.m in Sources */,
+				04CFFE04176763DB00B8AD6A /* TKNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,22 +201,6 @@
 				04CFFDD017672A2100B8AD6A /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		04CFFDE117672A2100B8AD6A /* TKViewController_iPhone.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				04CFFDE217672A2100B8AD6A /* en */,
-			);
-			name = TKViewController_iPhone.xib;
-			sourceTree = "<group>";
-		};
-		04CFFDE417672A2100B8AD6A /* TKViewController_iPad.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				04CFFDE517672A2100B8AD6A /* en */,
-			);
-			name = TKViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -275,10 +267,12 @@
 		04CFFDEA17672A2100B8AD6A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tomasz Kuzma (2YZA5ZSYLF)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TKNavigationControllerDemo/TKNavigationControllerDemo-Prefix.pch";
 				INFOPLIST_FILE = "TKNavigationControllerDemo/TKNavigationControllerDemo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9EA92E18-CCDE-4610-90D3-21DB2E06A668";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -286,10 +280,12 @@
 		04CFFDEB17672A2100B8AD6A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tomasz Kuzma (2YZA5ZSYLF)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TKNavigationControllerDemo/TKNavigationControllerDemo-Prefix.pch";
 				INFOPLIST_FILE = "TKNavigationControllerDemo/TKNavigationControllerDemo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9EA92E18-CCDE-4610-90D3-21DB2E06A668";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -313,6 +309,7 @@
 				04CFFDEB17672A2100B8AD6A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
