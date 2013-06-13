@@ -84,10 +84,10 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
     [self.mainViewController didMoveToParentViewController:self];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     
-    [self showToolbar:YES animated:YES completion:^{
+    [self showToolbar:YES animated:NO completion:^{
     }];
 }
 
@@ -124,8 +124,6 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
     }
     self.toolBar.alpha = newAlpha;
     self.toolBar.yOrigin = newYOrigin;
-    
-    NSLog(@"new origin = %f, location : %f", newYOrigin, location.y);
 }
 
 - (void)panGesture:(UIPanGestureRecognizer *)panGesture{
@@ -225,7 +223,9 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
 
 #pragma mark - Public
 
-- (void)showBottomViewController:(BOOL)show animated:(BOOL)animated completion:(void(^)(void))completion{
+- (void)showBottomViewController:(BOOL)show
+                        animated:(BOOL)animated
+                      completion:(void(^)(void))completion{
     
     if (show) {
         
@@ -252,11 +252,14 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
     }
     else{
         [self.bottomViewController willMoveToParentViewController:nil];
+        CGFloat newYOrigin = self.view.height - 44.0f;
         [UIView animateWithDuration:animated ? kMaxAnimDuration : 0.0
                               delay:0.0
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
-                             self.bottomViewController.view.yOrigin = self.view.height - 44.0f;
+                             self.bottomViewController.view.yOrigin = newYOrigin;
+                             self.toolBar.yOrigin = newYOrigin;
+                             self.toolBar.alpha = 1.0f;
                              _navFlags.isBottomBeingShown = YES;
                          }
                          completion:^(BOOL finished) {
@@ -363,12 +366,15 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
 @implementation UIViewController (TKNavigationController)
 
 - (TKNavigationController *)TKNavigationController{
-    if([self.parentViewController isKindOfClass:[TKNavigationController class]]){
-        return (TKNavigationController*)self.parentViewController;
+    if ([self isKindOfClass:[TKNavigationController class]]) {
+        return (TKNavigationController *)self;
+    }
+    else if([self.parentViewController isKindOfClass:[TKNavigationController class]]){
+        return (TKNavigationController *)self.parentViewController;
     }
     else if([self.parentViewController isKindOfClass:[UINavigationController class]] &&
             [self.parentViewController.parentViewController isKindOfClass:[TKNavigationController class]]){
-        return (TKNavigationController*)[self.parentViewController parentViewController];
+        return (TKNavigationController *)[self.parentViewController parentViewController];
     }
     else{
         return nil;
