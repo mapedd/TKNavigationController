@@ -105,8 +105,9 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
 
 #pragma mark - Actions
 
-- (void)panWithLocation:(CGPoint)location{
+- (void)panWithLocation:(CGPoint)location animationBlock:(BOOL)animationBlock{
 
+    
     CGFloat newYOrigin = self.bottomView.yOrigin;
     newYOrigin += location.y - prevLocation.y;
     
@@ -119,9 +120,7 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
     
     self.bottomView.yOrigin = newYOrigin;
     CGFloat newAlpha = newYOrigin / self.view.height;
-    if (newAlpha > 0.8) {
-        newAlpha = 1.0f;
-    }
+
     self.toolBar.alpha = newAlpha;
     self.toolBar.yOrigin = newYOrigin;
 }
@@ -130,67 +129,25 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
     
     CGPoint currLocation = [panGesture locationInView:self.view];
     CGPoint velocity = [panGesture velocityInView:self.view];
-    UIView *view = self.bottomViewController.view;
-    
-    [self addBottomViewToHierarchy:YES];
-    [self addChildViewController:self.bottomViewController];
     
     switch (panGesture.state) {
         case UIGestureRecognizerStateBegan:{
+            [self addBottomViewToHierarchy:YES];
+            [self addChildViewController:self.bottomViewController];
             prevLocation = currLocation;
             break;
         }
         case UIGestureRecognizerStateChanged:{
-            
-            [self panWithLocation:currLocation];
+            [self panWithLocation:currLocation animationBlock:NO];
             prevLocation = currLocation;
             break;
         }
-        case UIGestureRecognizerStateCancelled:
+        case UIGestureRecognizerStateCancelled:{
+            [self endPanningWithVelocity:velocity];
+            break;
+        }
         case UIGestureRecognizerStateEnded:{
-            __block BOOL isHiding = NO;
-            NSTimeInterval duration;
-            BOOL isGoingUp = velocity.y < 0;
-            
-            
-            if (isGoingUp)
-                duration = (view.yOrigin/view.height) * kMaxAnimDuration;
-            else
-                duration = (ABS(view.height-view.yOrigin)/view.height) * kMaxAnimDuration;
-            
-            NSTimeInterval veloDur = MAX(duration, 0.15);
-            
-            [UIView animateWithDuration:veloDur
-                                  delay:0.0
-                                options:UIViewAnimationOptionCurveEaseInOut
-                             animations:^{
-                                 
-                                 _navFlags.isBottomBeingShown = YES;
-                                 if (!isGoingUp) {
-                                     [self panWithLocation:CGPointMake(0.0f, self.view.height)];
-                                     isHiding = YES;
-                                     
-                                 }else{
-                                     [self panWithLocation:CGPointZero];
-                                     isHiding = NO;
-                                 }
-                             }
-                             completion:^(BOOL finished) {
-                                 _navFlags.isBottomBeingShown = NO;
-                                 if (isHiding) {
-                                     _navFlags.isBottomShown = NO;
-                                      [self.bottomViewController willMoveToParentViewController:nil];
-                                      [self addBottomViewToHierarchy:NO];
-                                     [self bottomDidMoveToParent:nil];
-                                     [self.bottomViewController removeFromParentViewController];
-                                 }
-                                 else{
-                                     _navFlags.isBottomShown = YES;
-                                     [self bottomDidMoveToParent:self];
-                                     
-                                 }
-                             }];
-            
+            [self endPanningWithVelocity:velocity];
             break;
         }
         default:
@@ -210,7 +167,6 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
         default: break;
     }
 }
-
 
 - (void)bottomDidMoveToParent:(UIViewController *)controller{
     [self.bottomViewController didMoveToParentViewController:controller];
@@ -313,6 +269,59 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
 
 
 #pragma mark - Private
+
+- (void)goToShown:(BOOL)shown{
+    if (shown) {
+        [self panWithLocation:CGPointZero animationBlock:YES];
+        self.toolBar.alpha = 0.0f;
+        self.bottomView.yOrigin = 0.0f;
+        self.toolBar.yOrigin = 0.0f;
+    }
+    else{
+        self.bottomView.yOrigin = self.view.height - self.toolBarHeight;
+        self.toolBar.yOrigin = self.view.height - self.toolBarHeight;
+        self.toolBar.alpha = 1.0f;
+    }
+}
+
+- (void)endPanningWithVelocity:(CGPoint)velocity{
+    
+    NSTimeInterval duration;
+    BOOL isGoingUp = velocity.y < 0;
+    
+    UIView *view = self.bottomViewController.view;
+    
+    if (isGoingUp)
+        duration = (view.yOrigin/view.height) * kMaxAnimDuration;
+    else
+        duration = (ABS(view.height-view.yOrigin)/view.height) * kMaxAnimDuration;
+    
+    NSTimeInterval veloDur = MAX(duration, 0.15);
+    
+    [UIView animateWithDuration:veloDur
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         
+                         _navFlags.isBottomBeingShown = YES;
+                         [self goToShown:isGoingUp];
+                     }
+                     completion:^(BOOL finished) { 
+                         _navFlags.isBottomBeingShown = NO;
+                         if (!isGoingUp) {
+                             _navFlags.isBottomShown = NO;
+                             [self.bottomViewController willMoveToParentViewController:nil];
+                             [self addBottomViewToHierarchy:NO];
+                             [self bottomDidMoveToParent:nil];
+                             [self.bottomViewController removeFromParentViewController];
+                         }
+                         else{
+                             _navFlags.isBottomShown = YES;
+                             [self bottomDidMoveToParent:self];
+                             
+                         }
+                     }];
+}
 
 - (void)addBottomViewToHierarchy:(BOOL)add{
     if (add) {

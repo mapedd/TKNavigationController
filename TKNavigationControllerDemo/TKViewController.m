@@ -25,26 +25,6 @@
     [super viewDidLoad];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super  viewWillAppear:animated];
-    NSLog(@"view will appear %@", [self description]);
-}
-
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    NSLog(@"view did appear %@", [self description]);
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    NSLog(@"view will disappear %@", [self description]);
-}
-
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    NSLog(@"view did disappear %@", [self description]);
-}
-
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
 }
