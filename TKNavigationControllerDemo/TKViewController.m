@@ -45,4 +45,8 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.navigationController pushViewController:TKViewController.new animated:YES];
+}
+
 @end

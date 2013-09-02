@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TKNavigationController : UIViewController
+@interface TKNavigationController : UIViewController{
+    UIView *_toolBar;
+}
 
 /* Default 44.0f */
 @property (nonatomic, assign) CGFloat toolBarHeight;
@@ -24,6 +26,10 @@
 - (void)showBottomViewController:(BOOL)show
                         animated:(BOOL)animated
                       completion:(void(^)(void))completion;
+
+@property (nonatomic, strong) UIViewController *mainViewController;
+
+@property (nonatomic, strong) UIViewController *bottomViewController;
 
 
 @end
