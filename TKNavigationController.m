@@ -42,6 +42,12 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
 
 @implementation TKNavigationController
 
+#ifdef __IPHONE_7_0
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+#endif
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nil bundle:nil];
     if(!self)return nil;
