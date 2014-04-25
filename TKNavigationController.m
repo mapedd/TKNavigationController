@@ -7,7 +7,6 @@
 //
 
 #import "TKNavigationController.h"
-#import "UIView+TKGeometry.h"
 #import <QuartzCore/QuartzCore.h>
 
 const NSTimeInterval kMaxAnimDuration = 0.33;
@@ -61,8 +60,6 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
             bottomViewController:(UIViewController *)bottomViewController{
     
     NSParameterAssert(mainViewController);
-    NSParameterAssert(navigatorToolbar);
-    NSParameterAssert(bottomViewController);
     
     self = [self initWithNibName:nil bundle:nil];
     if (!self) return nil;
@@ -115,7 +112,9 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
         
         [UIView animateWithDuration:animated ? kMaxAnimDuration : 0.0
                          animations:^{
-                             self.toolBar.yOrigin -= self.toolBarHeight;
+                             CGRect frame = self.toolBar.frame;
+                             frame.origin.y -= self.toolBarHeight;
+                             self.toolBar.frame = frame;
                          }
                          completion:^(BOOL finished) {
                              _navFlags.isToolBarBeingShown = NO;
@@ -128,7 +127,9 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
         
         [UIView animateWithDuration:animated ? kMaxAnimDuration : 0.0
                          animations:^{
-                             self.toolBar.yOrigin += self.toolBarHeight;
+                             CGRect frame = self.toolBar.frame;
+                             frame.origin.y += self.toolBarHeight;
+                             self.toolBar.frame =frame;
                          }
                          completion:^(BOOL finished) {
                              _navFlags.isToolBarBeingShown = NO;
@@ -148,7 +149,7 @@ const NSTimeInterval kMaxAnimDuration = 0.33;
         [self.view addSubview:self.toolBar];
         [self addShadowToToolBar];
     }
-    CGRect rect = CGRectMake(0.0f, self.view.height, self.view.width, self.toolBarHeight);
+    CGRect rect = CGRectMake(0.0f, self.view.frame.size.height, self.view.frame.size.width, self.toolBarHeight);
     self.toolBar.frame = rect;
     self.toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 }
